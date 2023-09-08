@@ -1,7 +1,7 @@
 import {CreateCommitRequest, getConfigFromEnv} from "../src";
-import {ObjectsService} from "../src/objects";
+import {ObjectsService} from "../src";
 import * as fs from "fs";
-import {Branch} from "../src/branch";
+import {Branch} from "../src";
 
 test('Get Config', async () => {
     const config = getConfigFromEnv();
