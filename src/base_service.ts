@@ -1,5 +1,7 @@
 import axios, {AxiosError, AxiosInstance} from "axios";
 import {ApiEndpoint, Config, QueryParams, RequestError, ShortObjectInfo} from "./modules";
+import * as fs from "fs";
+import FormData from "form-data"
 
 export class BaseService {
     private readonly client: AxiosInstance;
@@ -30,6 +32,7 @@ export class BaseService {
             .catch(err => {
                 if (axios.isAxiosError(err)) {
                     const error = err as AxiosError;
+                    console.log("error", error)
                     throw new RequestError(error.message, error.status, error.response?.data)
                 }
                 throw new RequestError("request error", 400)
@@ -61,7 +64,7 @@ export class BaseService {
                 throw new RequestError("request error", 400)
             })
     }
-    async deleteWithParams<B>(endpoint: string, params: QueryParams): Promise<boolean> {
+    async deleteWithParams(endpoint: string, params: QueryParams): Promise<boolean> {
         return this.client.delete(endpoint, {
             params
         })
@@ -69,14 +72,17 @@ export class BaseService {
             .catch(err => {
                 if (axios.isAxiosError(err)) {
                     const error = err as AxiosError;
+                    console.log("error", error)
                     throw new RequestError(error.message, error.status, error.response?.data)
                 }
                 throw new RequestError("request error", 400)
             })
     }
 
-    async upload<T>(endpoint: string, data: any, params: QueryParams): Promise<T> {
-        return this.client.post<T>(endpoint, data, {
+    async upload<T>(endpoint: string, data: fs.ReadStream, params: QueryParams): Promise<T> {
+        const formData = new FormData();
+        formData.append('content', data, params.path);
+        return this.client.post<T>(endpoint, formData, {
             params,
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -86,6 +92,7 @@ export class BaseService {
             .catch(err => {
                 if (axios.isAxiosError(err)) {
                     const error = err as AxiosError;
+                    console.log("error", error)
                     throw new RequestError(error.message, error.status, error.response?.data)
                 }
                 throw new RequestError("request error", 400)
@@ -160,8 +167,10 @@ export class BaseService {
             })
     }
 
-    async head(endpoint: string): Promise<ShortObjectInfo> {
-        return this.client.head(endpoint)
+    async head(endpoint: string, params: QueryParams): Promise<ShortObjectInfo> {
+        return this.client.head(endpoint, {
+            params
+        })
             .then(res => {
                 let shortInfo: ShortObjectInfo = {
                     size: res.headers['content-length'] ? parseInt(res.headers['content-length']) : 0,
@@ -174,6 +183,7 @@ export class BaseService {
             .catch(err => {
                 if (axios.isAxiosError(err)) {
                     const error = err as AxiosError;
+                    console.log("error", error)
                     throw new RequestError(error.message, error.status, error.response?.data)
                 }
                 throw new RequestError("request error", 400)

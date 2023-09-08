@@ -74,7 +74,7 @@ export class Branch extends BaseService {
     }
 
     async createBranch(branch: string, source: string): Promise<string> {
-        return this.post<string, object>(this.getEndpoint(ApiEndpoint.Repositories).concat(`/${this.config.repository}/branches/${branch}`), this.getDefaultParams(), {
+        return this.post<string, object>(this.getEndpoint(ApiEndpoint.Repositories).concat(`/${this.config.repository}/branches`), this.getDefaultParams(), {
             source: source,
             name: branch
         });
@@ -114,7 +114,7 @@ export class Branch extends BaseService {
         return this.post<CommitInfo, CreateCommitRequest>(this.getEndpoint(ApiEndpoint.Repositories).concat(`/${this.config.repository}/branches/${branch}/commits`), this.getDefaultParams(), commit);
     }
 
-    async getCommit(branch: string, commitId: string): Promise<CommitInfo> {
-        return this.get(this.getEndpoint(ApiEndpoint.Repositories).concat(`/${this.config.repository}/branches/${branch}/commits/${commitId}`));
+    async getCommit(commitId: string): Promise<CommitInfo> {
+        return this.get(this.getEndpoint(ApiEndpoint.Repositories).concat(`/${this.config.repository}/commits/${commitId}`));
     }
 }
