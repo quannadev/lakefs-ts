@@ -1,16 +1,3 @@
-# Lakefs client for Node.js
-
-This is the Node.js client for [lakeFS](https://lakefs.io/).
-
-## Installation
-
-```bash
-npm install lakefs-ts
-```
-
-## Usage
-
-```typescript
 import {Branch, getConfigFromEnv, QueryParams} from "../dist";
 
 async function main() {
@@ -27,4 +14,3 @@ main().catch(err => {
     console.log("err", err)
     process.exit(1);
 })
-```

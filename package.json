@@ -1,6 +1,6 @@
 {
   "name": "lakefs-ts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Lakefs api for nodejs",
   "main": "dist/index",
   "type": "module",
@@ -25,6 +25,12 @@
     "@types/form-data": "^2.5.0",
     "axios": "^1.5.0",
     "form-data": "^4.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/",
+    "tag": "latest",
+    "package": "./package.json"
   },
   "devDependencies": {
     "@types/jest": "^29.5.4",
