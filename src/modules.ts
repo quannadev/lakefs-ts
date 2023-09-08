@@ -54,6 +54,8 @@ export interface QueryParams {
     marker?: string;
     page?: number;
     amount?: number;
+    limit?: number;
+    path?: string;
     user_metadata?: boolean;
 }
 
@@ -197,14 +199,19 @@ export interface CreateTagRequest {
     id: string;
     ref: string;
 }
+export interface ShortObjectInfo {
+    size: number;
+    last_modified: Date;
+    range?: string;
+    tags: string
+}
 export enum ApiEndpoint {
     /// Configs
     Config,
     Setup,
     Auth,
     /// Repositories
-    GetRepositories,
+    Repositories,
     /// Objects
-    GetObjects,
-    DeleteObject,
+    Objects,
 }

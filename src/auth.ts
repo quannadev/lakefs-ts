@@ -7,7 +7,7 @@ export class Auth extends BaseService {
     }
 
     async getUser(userId: string): Promise<UserInfo> {
-        return this.get<UserInfo>(this.getEndpoint(ApiEndpoint.Auth).concat(`/users/${userId}`));
+        return this.get(this.getEndpoint(ApiEndpoint.Auth).concat(`/users/${userId}`));
     }
 
     async deleteUser(userId: string): Promise<boolean> {
@@ -15,11 +15,11 @@ export class Auth extends BaseService {
     }
 
     async getUsers(): Promise<UserInfo[]> {
-        return this.get<UserInfo[]>(this.getEndpoint(ApiEndpoint.Auth).concat(`/users`));
+        return this.get(this.getEndpoint(ApiEndpoint.Auth).concat(`/users`));
     }
 
     async getGroups(params: QueryParams): Promise<Response<GroupItem[]>> {
-        return this.get<Response<GroupItem[]>>(this.getEndpoint(ApiEndpoint.Auth).concat(`/groups`), params);
+        return this.get(this.getEndpoint(ApiEndpoint.Auth).concat(`/groups`), params);
     }
 
     async createGroup(group_name: string): Promise<GroupItem> {
@@ -33,7 +33,7 @@ export class Auth extends BaseService {
     }
 
     async getGroupMembers(group_name: string): Promise<Response<UserInfo[]>> {
-        return this.get<Response<UserInfo[]>>(this.getEndpoint(ApiEndpoint.Auth).concat(`/groups/${group_name}/members`));
+        return this.get(this.getEndpoint(ApiEndpoint.Auth).concat(`/groups/${group_name}/members`));
     }
 
     async addGroupMember(group_name: string, user_id: string): Promise<boolean> {

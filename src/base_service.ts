@@ -1,5 +1,5 @@
 import axios, {AxiosError, AxiosInstance} from "axios";
-import {ApiEndpoint, Config, QueryParams, RequestError} from "./modules";
+import {ApiEndpoint, Config, QueryParams, RequestError, ShortObjectInfo} from "./modules";
 
 export class BaseService {
     private readonly client: AxiosInstance;
@@ -53,6 +53,36 @@ export class BaseService {
         }
         return this.client.delete(endpoint)
             .then(res => res.status < 300)
+            .catch(err => {
+                if (axios.isAxiosError(err)) {
+                    const error = err as AxiosError;
+                    throw new RequestError(error.message, error.status, error.response?.data)
+                }
+                throw new RequestError("request error", 400)
+            })
+    }
+    async deleteWithParams<B>(endpoint: string, params: QueryParams): Promise<boolean> {
+        return this.client.delete(endpoint, {
+            params
+        })
+            .then(res => res.status < 300)
+            .catch(err => {
+                if (axios.isAxiosError(err)) {
+                    const error = err as AxiosError;
+                    throw new RequestError(error.message, error.status, error.response?.data)
+                }
+                throw new RequestError("request error", 400)
+            })
+    }
+
+    async upload<T>(endpoint: string, data: any, params: QueryParams): Promise<T> {
+        return this.client.post<T>(endpoint, data, {
+            params,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+            .then(res => res.data)
             .catch(err => {
                 if (axios.isAxiosError(err)) {
                     const error = err as AxiosError;
@@ -130,6 +160,26 @@ export class BaseService {
             })
     }
 
+    async head(endpoint: string): Promise<ShortObjectInfo> {
+        return this.client.head(endpoint)
+            .then(res => {
+                let shortInfo: ShortObjectInfo = {
+                    size: res.headers['content-length'] ? parseInt(res.headers['content-length']) : 0,
+                    range: res.headers['content-range'] ? res.headers['content-range'] : '',
+                    last_modified: res.headers['Last-Modified'] ? new Date(res.headers['Last-Modified']) : new Date(),
+                    tags: res.headers['ETag'] ? res.headers['ETag'] : ''
+                }
+                return shortInfo;
+            })
+            .catch(err => {
+                if (axios.isAxiosError(err)) {
+                    const error = err as AxiosError;
+                    throw new RequestError(error.message, error.status, error.response?.data)
+                }
+                throw new RequestError("request error", 400)
+            })
+    }
+
 
     getEndpoint(endpoint: ApiEndpoint): string {
         switch (endpoint) {
@@ -139,11 +189,9 @@ export class BaseService {
                 return '/setup_lakefs';
             case ApiEndpoint.Auth:
                 return '/auth';
-            case ApiEndpoint.GetObjects:
-                return `/repositories/${this.config.repository}/refs/${this.config.branch}/objects/ls`;
-            case ApiEndpoint.DeleteObject:
+            case ApiEndpoint.Objects:
                 return `/repositories/${this.config.repository}/refs/${this.config.branch}/objects`;
-            case ApiEndpoint.GetRepositories:
+            case ApiEndpoint.Repositories:
                 return `/repositories`;
             default:
                 return '';

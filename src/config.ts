@@ -16,19 +16,19 @@ export class ConfigSetup extends BaseService {
     }
 
     async getVersion(): Promise<Version> {
-        return this.get<Version>(this.getEndpoint(ApiEndpoint.Config).concat('/version'));
+        return this.get(this.getEndpoint(ApiEndpoint.Config).concat('/version'));
     }
     async getStorage(): Promise<BlockstoreConfig> {
-        return this.get<BlockstoreConfig>(this.getEndpoint(ApiEndpoint.Config).concat('/storage'));
+        return this.get(this.getEndpoint(ApiEndpoint.Config).concat('/storage'));
     }
     ///config/garbage-collection
     async getGarbageCollection(): Promise<GarbageCollectionConfig> {
-        return this.get<GarbageCollectionConfig>(this.getEndpoint(ApiEndpoint.Config).concat('/garbage-collection'));
+        return this.get(this.getEndpoint(ApiEndpoint.Config).concat('/garbage-collection'));
     }
 
     /// Setup
     async getSetupStatus(): Promise<SetupStatus> {
-        return this.get<SetupStatus>(this.getEndpoint(ApiEndpoint.Setup));
+        return this.get(this.getEndpoint(ApiEndpoint.Setup));
     }
     async setupAdminUser(info: CreateUserRequest): Promise<UserCertificate> {
         return this.post<UserCertificate, CreateUserRequest>(this.getEndpoint(ApiEndpoint.Setup), this.getDefaultParams(), info);
