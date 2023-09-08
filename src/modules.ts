@@ -154,6 +154,12 @@ export interface CommitInfo {
     metadata: Metadata;
 }
 
+export interface CreateCommitRequest {
+    message: string;
+    metadata?: Metadata;
+    date?: number; // unix timestamp
+}
+
 export interface MergeRequest {
     message: string;
     metadata?: Metadata;
@@ -182,7 +188,7 @@ export interface DiffItem {
     size_bytes: number;
 }
 
-export interface TagInfo {
+export interface GeneralInfo {
     id: string;
     commit_id: string;
 }
