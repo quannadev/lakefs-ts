@@ -51,85 +51,51 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.Repositories = void 0;
-var modules_1 = require("./modules");
+exports.ConfigSetup = void 0;
 var base_service_1 = require("./base_service");
-var Repositories = /** @class */ (function (_super) {
-    __extends(Repositories, _super);
-    function Repositories(config) {
+var modules_1 = require("./modules");
+var ConfigSetup = /** @class */ (function (_super) {
+    __extends(ConfigSetup, _super);
+    function ConfigSetup(config) {
         return _super.call(this, config) || this;
     }
-    Repositories.prototype.repositories = function () {
+    ConfigSetup.prototype.getVersion = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.get(this.getEndpoint(modules_1.ApiEndpoint.Repositories), this.getDefaultParams())];
+                return [2 /*return*/, this.get(this.getEndpoint(modules_1.ApiEndpoint.Config).concat('/version'))];
             });
         });
     };
-    Repositories.prototype.createRepository = function (requestData) {
+    ConfigSetup.prototype.getStorage = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.post(this.getEndpoint(modules_1.ApiEndpoint.Repositories), this.getDefaultParams(), requestData)];
+                return [2 /*return*/, this.get(this.getEndpoint(modules_1.ApiEndpoint.Config).concat('/storage'))];
             });
         });
     };
-    Repositories.prototype.getRepository = function (name) {
+    ///config/garbage-collection
+    ConfigSetup.prototype.getGarbageCollection = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.get(this.getEndpoint(modules_1.ApiEndpoint.Repositories).concat("/".concat(name)), this.getDefaultParams())];
+                return [2 /*return*/, this.get(this.getEndpoint(modules_1.ApiEndpoint.Config).concat('/garbage-collection'))];
             });
         });
     };
-    Repositories.prototype.deleteRepository = function (name) {
+    /// Setup
+    ConfigSetup.prototype.getSetupStatus = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this["delete"](this.getEndpoint(modules_1.ApiEndpoint.Repositories).concat("/".concat(name)))];
+                return [2 /*return*/, this.get(this.getEndpoint(modules_1.ApiEndpoint.Setup))];
             });
         });
     };
-    Repositories.prototype.getRepositoryMetadata = function (name) {
+    ConfigSetup.prototype.setupAdminUser = function (info) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.get(this.getEndpoint(modules_1.ApiEndpoint.Repositories).concat("/".concat(name, "/metadata")), this.getDefaultParams())];
+                return [2 /*return*/, this.post(this.getEndpoint(modules_1.ApiEndpoint.Setup), this.getDefaultParams(), info)];
             });
         });
     };
-    Repositories.prototype.setAllowedBranchProtection = function (name) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/, this.postBoolean(this.getEndpoint(modules_1.ApiEndpoint.Repositories).concat("/".concat(name, "/branch_protection/set_allowed")), this.getDefaultParams(), null)];
-            });
-        });
-    };
-    Repositories.prototype.getBranchProtection = function (name) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/, this.get(this.getEndpoint(modules_1.ApiEndpoint.Repositories).concat("/".concat(name, "/branch_protection")), this.getDefaultParams())];
-            });
-        });
-    };
-    Repositories.prototype.setBranchProtection = function (name, rule) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/, this.postBoolean(this.getEndpoint(modules_1.ApiEndpoint.Repositories).concat("/".concat(name, "/branch_protection")), this.getDefaultParams(), rule)];
-            });
-        });
-    };
-    Repositories.prototype.deleteBranchProtection = function (name, rule) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/, this["delete"](this.getEndpoint(modules_1.ApiEndpoint.Repositories).concat("/".concat(name, "/branch_protection")), rule)];
-            });
-        });
-    };
-    Repositories.prototype.getEndpoint = function (endpoint) {
-        switch (endpoint) {
-            case modules_1.ApiEndpoint.Repositories:
-                return "/repositories";
-            default:
-                return '';
-        }
-    };
-    return Repositories;
+    return ConfigSetup;
 }(base_service_1.BaseService));
-exports.Repositories = Repositories;
+exports.ConfigSetup = ConfigSetup;

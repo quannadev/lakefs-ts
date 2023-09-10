@@ -2,7 +2,7 @@ import { ApiEndpoint, Config, CreateRepositoryRequest, Metadata, RepositoryInfo,
 import { BaseService } from "./base_service";
 export declare class Repositories extends BaseService {
     constructor(config: Config);
-    Repositories(): Promise<Response<RepositoryInfo[]>>;
+    repositories(): Promise<Response<RepositoryInfo[]>>;
     createRepository(requestData: CreateRepositoryRequest): Promise<RepositoryInfo>;
     getRepository(name: string): Promise<RepositoryInfo>;
     deleteRepository(name: string): Promise<boolean>;

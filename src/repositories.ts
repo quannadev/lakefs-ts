@@ -14,7 +14,7 @@ export class Repositories extends BaseService {
         super(config);
     }
 
-    async Repositories(): Promise<Response<RepositoryInfo[]>> {
+    async repositories(): Promise<Response<RepositoryInfo[]>> {
         return this.get(this.getEndpoint(ApiEndpoint.Repositories), this.getDefaultParams());
     }
 
