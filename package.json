@@ -1,6 +1,6 @@
 {
   "name": "@quannadev/lakefs-ts",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Lakefs api for nodejs",
   "main": "dist/index",
   "typings": "dist/index.d.ts",
@@ -31,10 +31,6 @@
     "@types/form-data": "^2.5.0",
     "axios": "^1.5.0",
     "form-data": "^4.0.0"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@quannadev",
-    "tag": "v1.0.3"
   },
   "devDependencies": {
     "@types/jest": "^29.5.4",
