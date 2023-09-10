@@ -1,6 +1,6 @@
 {
   "name": "@quannadev/lakefs-ts",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Lakefs api for nodejs",
   "main": "dist/index",
   "typings": "dist/index.d.ts",
@@ -40,8 +40,7 @@
     "typescript": "^4.4.2"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://npm.pkg.github.com/"
+    "registry": "https://npm.pkg.github.com/@quannadev"
   },
   "bugs": {
     "url": "https://github.com/quannadev/lakefs-ts/issues"
